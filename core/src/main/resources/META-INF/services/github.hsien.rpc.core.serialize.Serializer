@@ -1,0 +1,3 @@
+github.hsien.rpc.core.serialize.hessian.HessianSerializer
+github.hsien.rpc.core.serialize.kyro.KryoSerializer
+github.hsien.rpc.core.serialize.protostuff.ProtostuffSerializer
