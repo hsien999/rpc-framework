@@ -13,13 +13,14 @@ import java.util.Locale;
  *
  * @author hsien
  */
-@RpcService(group = "test", version = "v1.0")
-public class HelloServiceImpl implements HelloService {
+@RpcService(group = "CN", version = "v1.0")
+public class HelloServiceCN implements HelloService {
     @Override
     public String sayHello(Hello hello) {
-        DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.CHINA);
-        String helloMsg = "[Service]=%s, [code]=%d, [msg]=%s, [date]=%s";
+        DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.CHINA);
+        DateFormat tf = DateFormat.getTimeInstance(DateFormat.LONG, Locale.CHINA);
+        String helloMsg = "[服务]=%s, [编码]=%d, [消息]=%s, [日期]=%s";
         return String.format(helloMsg, this.getClass().getName(), hello.getCode(),
-            hello.getMessage(), df.format(hello.getDate()));
+            hello.getMessage(), df.format(hello.getDate()) + " " + tf.format(hello.getDate()));
     }
 }

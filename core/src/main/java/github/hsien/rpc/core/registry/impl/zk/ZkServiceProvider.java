@@ -30,7 +30,6 @@ public class ZkServiceProvider implements ServiceProvider {
     @Override
     public void publishService(RpcServiceConfig config, SocketAddress address) {
         final String rpcServiceName = config.getRpcServiceName();
-        System.out.println("rpcServiceName" + rpcServiceName);
         SingletonHolder<Object> holder = serviceMap.computeIfAbsent(rpcServiceName, k -> new SingletonHolder<>());
         holder.setIfAbsent(() -> {
             serviceRegistry.registerService(rpcServiceName, address);

@@ -21,13 +21,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HelloController {
     private static final AtomicInteger CALL_COUNT = new AtomicInteger();
 
-    @RpcReference(group = "test", version = "v1.0")
-    private HelloService helloService;
+    @RpcReference(group = "EN", version = "v1.0")
+    private HelloService helloServiceEN;
 
-    @GetMapping(value = "/hello", produces = "application/json")
-    public Map<String, String> sayHello() {
+    @RpcReference(group = "CN", version = "v1.0")
+    private HelloService helloServiceCN;
+
+    @GetMapping(value = "/hello/en", produces = "application/json")
+    public Map<String, String> sayHelloByEN() {
         int count = CALL_COUNT.getAndIncrement();
-        return Collections.singletonMap("hello",
-            helloService.sayHello(new Hello(count, String.format("第%d个消息", count), new Date())));
+        return Collections.singletonMap("data",
+            helloServiceEN.sayHello(new Hello(count, String.format("the %dth message", count), new Date())));
+    }
+
+    @GetMapping(value = "/hello/cn", produces = "application/json")
+    public Map<String, String> sayHelloByCN() {
+        int count = CALL_COUNT.getAndIncrement();
+        return Collections.singletonMap("数据",
+            helloServiceCN.sayHello(new Hello(count, String.format("第%d个消息", count), new Date())));
     }
 }

@@ -15,7 +15,7 @@
 ## TODO
 
 - [x] **Use Netty (based on NIO) instead of BIO to implement network transfers.**
-- [x] **Use Zookeeper to manage related service address information**
+- [x] **Use Zookeeper to manage related service address information.**
 - [x] **Support for multiple open source serialization mechanisms: Kryo, Hessian and Protostuff.**
 - [x] **Support for Netty server-side reusable Channels to improve the utilization of network connection resources.**
 - [x] **Support for compressing/decompressing messages using Gzip.**

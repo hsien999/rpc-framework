@@ -32,9 +32,6 @@ import java.util.concurrent.TimeUnit;
 @LoadLevel(name = RegistryType.ZK)
 public class ZkCuratorRegistry implements ServiceRegistry {
     private static final Logger LOGGER = LoggerFactory.getLogger(ZkCuratorRegistry.class);
-    private static final int DEFAULT_MAX_RETRIES = 3;
-    private static final int DEFAULT_SLEEP_TIME = 1000;
-    private static final int DEFAULT_MAX_START_WAIT_TIME = 30;
     private static final String DEFAULT_CENTER_ADDRESS = "127.0.0.1:2181";
     private static final String ZK_REGISTER_ROOT_PATH = "/rpc-hsien";
     private static final String ZK_PATH_SEPARATOR = "/";
@@ -54,12 +51,12 @@ public class ZkCuratorRegistry implements ServiceRegistry {
             LOGGER.warn("No available config found in {}, use default address [{}] instead", RPC_CONFIG_PATH,
                 DEFAULT_CENTER_ADDRESS);
         }
-        // retry policy: retry n times, and increase sleep time between retries
-        RetryPolicy retryPolicy = new ExponentialBackoffRetry(DEFAULT_SLEEP_TIME, DEFAULT_MAX_RETRIES);
+        // retry policy: retry 3 times, and increase sleep time by 1000 between retries
+        RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
         try {
             client = CuratorFrameworkFactory.builder().connectString(centerAddress).retryPolicy(retryPolicy).build();
             client.start();
-            client.blockUntilConnected(DEFAULT_MAX_START_WAIT_TIME, TimeUnit.SECONDS);
+            client.blockUntilConnected(30, TimeUnit.SECONDS);
         } catch (Exception e) {
             throw new ServiceRegisterException("Failed to start zk client via curator", e);
         }
